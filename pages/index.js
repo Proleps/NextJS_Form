@@ -108,7 +108,6 @@ function renderInputs(state, submitted, flag, valid, onChange) {
 
 function renderRadio(state, submitted, onChange) {
   const acc = []
-  
   state.controls.map((item, i) => 
     acc.push(
       <Input

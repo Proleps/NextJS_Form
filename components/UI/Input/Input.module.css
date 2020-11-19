@@ -1,4 +1,5 @@
 .Input {
+  position: relative;
   margin-bottom: 24px;
   display: flex;
   flex-direction: column;
@@ -56,7 +57,7 @@
 }
 
 .Input span {
-  margin-top: 2px;
+  bottom: -24px;
 }
 
 .Radio {

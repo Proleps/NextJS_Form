@@ -16,11 +16,14 @@ export const Radio = ({ state, renderChildren, submit, onChange, flag, title } )
     <div className={ classes.Radio } >
       <h2 className={ classes.Title } >
 
-        <div>{title}</div>
+        <div>
+          {title}
+
+          {submit && !valid &&
+            <ErrorCapture message={state.message} />
+          }
+        </div>
         
-        {submit && !valid &&
-          <ErrorCapture message={state.message} />
-        }
       </h2>
       
 
