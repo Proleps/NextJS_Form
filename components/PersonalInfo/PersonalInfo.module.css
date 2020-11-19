@@ -15,7 +15,7 @@
     display: flex;
     flex-wrap: wrap;
     flex-direction: row;
-    align-items: flex-end;
+    align-items: flex-start;
   }
   .PersonalInfo div label {
     margin-right: 80px;

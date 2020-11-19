@@ -42,6 +42,7 @@ const initialState = {
     required: false,
     placeholder: "Вставьте ссылку на Github",
     label: "Вставьте ссылку на Github",
+    message: "Проверьте правильность ссылки",
     value: "",
     valid: true
   },
@@ -57,7 +58,7 @@ const initialState = {
     type: "file",
     required: false,
     multiple: true,
-    message: "В имени могут быть только буквы",
+    message: "Выберите файл заново",
     value: "",
     valid: true
   },
@@ -130,13 +131,16 @@ export default function Form() {
   function isFormValid(click) {
     let isValid = true
     for (let i in currentState) {
-      isValid = isValid && currentState[i].valid
+      isValid = currentState[i].required?(isValid && currentState[i].valid):isValid
     } 
-    if(isValid && !click) {
-      setFormState({...formState, submitted: false, valid: true})
-    } else {
-      setFormState({...formState, valid: false})
+    if (!click) {
+      if(isValid) {
+        setFormState({...formState, submitted: false, valid: true})
+      } else {
+        setFormState({...formState, valid: false})
+      }
     }
+    
     return isValid
   }
 
@@ -163,11 +167,21 @@ export default function Form() {
 
   const fileInput = useMemo( () => (
     <FileInput
-      key={Math.random()}
+      key={currentState.fileInput.value}
       state={currentState.fileInput}
       item="fileInput"
       onChange={onInputChangeHandler}
       submit={formState.submitted}
+    />
+    ), [formState.flag, currentState.fileInput.value, formState.submitted] )
+
+  const githubInput = useMemo( () => (
+    <Input
+      key={Math.random()}
+      state={currentState.github}
+      onChange={onInputChangeHandler}
+      item="github"
+      submitted={formState.submitted}
     />
   ), [formState.flag] ) 
 
@@ -203,13 +217,7 @@ export default function Form() {
           />
 
           <h2>Github</h2>
-          <Input
-            key={Math.random()}
-            state={currentState.github}
-            onChange={onInputChangeHandler}
-            item="github"
-            submitted={formState.submitted}
-          />
+          {githubInput}
           
           <Privacy
             valid={currentState.privacyInput.valid} 

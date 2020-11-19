@@ -4,17 +4,19 @@ import classes from './FileInput.module.css'
 
 
 export const FileInput = ({state, item, onChange, submit}) => {
+
   const initialState = {
-    flag: state.valid,
+    flag: !state.value,
     fileName: state.value
   }
+
   const [file, setState] = useState(initialState)
   const cls = [classes.File]
-  
+
   function fileHandler(newState) {
-    !!newState.payload?setState({flag: false, fileName: newState.payload}):setState({flag: true, fileName: ""})
-    newState.valid && cls.splice(0, 1)
     onChange(newState)
+    !!newState.payload?setState({...file, flag: false, fileName: newState.payload}):setState({...file, flag: true, fileName: ""})
+    newState.valid && cls.splice(0, 1)
   }
   
   !file.flag && !!file.value && cls.push(classes.NotValid)

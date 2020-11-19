@@ -33,6 +33,11 @@
 
 .Disabled {
   background: #E8E8E8;
-  color: #BCBCBC;
   border: 1px solid #D9D9D9;
+  color: #BCBCBC;
+  cursor: default;
+}
+
+.Disabled:hover {
+  background: #E8E8E8;
 }

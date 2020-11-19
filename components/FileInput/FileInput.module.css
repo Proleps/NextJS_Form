@@ -106,9 +106,13 @@
   .File {
     max-width: 256px;
     margin: 0;
-    margin-bottom: 48px;
+    margin-top: 22px;
   }
   .File svg {
     left: 8px;
+  }
+  .Loaded {
+    margin: 0;
+    margin-top: 24px;
   }
 }

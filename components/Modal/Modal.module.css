@@ -125,14 +125,33 @@
 
 @media(min-width: 700px) {
   .Modal {
+    min-width: 547px;
     max-width: 758px;
     height: 800px;
     left: 50%;
     transform: translate3D(-50%, -50%, 0);
+    padding: 40px 0 58px 0;
+  }
+  .ModalTitle {
+    font-weight: bold;
+    font-size: 24px;
+    line-height: 38px;
+    text-align: center;
+    color: #262626;
+  }
+  .ModalExit {
+    top: 24px;
+    right: 24px;
+  }
+  .ModalText {
+    margin-left: 40px;
+    margin-bottom: 48px;
+    margin-right: 20px;
   }
   .Submitted {
     max-width: 547px;
     height: 244px;
     top: 327px;
+    padding: 40px 0 40px 0;
   }
 }

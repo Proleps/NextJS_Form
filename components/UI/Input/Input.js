@@ -14,19 +14,18 @@ function reducer(state, action) {
   }
 }
 
-
 export const Input = ( {state, submitted, valid, onChange, item, checked, classFromFile, children} ) => {
   const initialState = {
     value: state.value,
     valid: state.valid
   }
   const [store, dispatch] = useReducer(reducer, initialState)
-
   const { type = "text", required = false, placeholder, label, name, message } = state
-
   const cls = classFromFile?classFromFile:(type === "checkbox" || type === "radio")?[classes.Radio]:[classes.Input]
 
-  required && submitted && !valid && !store.valid && cls.push([classes.InValid])
+  if(type === "url") {
+    !!store.value && submitted && !store.valid && !valid && cls.push([classes.InValid])
+  } else required && submitted && !valid && !store.valid && cls.push([classes.InValid])
 
   const checkedHandler = (type === "radio")?(checked === store.value):(type === "checkbox")?(store.valid):null
   
@@ -45,7 +44,7 @@ export const Input = ( {state, submitted, valid, onChange, item, checked, classF
       }
     } else {
     dispatch({type: 'onChange', payload: e.target.value})
-    required && dispatch({type: 'isValid', payload: e.target.validity.valid})    
+    dispatch({type: 'isValid', payload: e.target.validity.valid})
     onChange({type: item, payload: e.target.value, valid: e.target.validity.valid})
     }
   }
@@ -81,7 +80,7 @@ export const Input = ( {state, submitted, valid, onChange, item, checked, classF
         )
       }
 
-      {required && (type === 'text' || type === 'email') && !store.valid && submitted && (
+      { (type != 'radio' ) && !store.valid  && submitted &&  (
         <ErrorCapture message={message} />
       )}
     </label>
