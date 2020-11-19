@@ -1,0 +1,42 @@
+.Radio {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.Title {
+  margin-bottom: 24px;
+  display: flex;
+  left: 8px;
+}
+
+.Title span {
+  margin-left: 8px;
+  margin-top: 11px;
+}
+
+.RadioGender {
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+.RadioGender > label:first-child {
+  margin-right: 40px;
+}
+
+@media(min-width: 700px) {
+  .Radio {
+    width: 360px;
+  }
+  .RadioGender {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+  }
+  .RadioGender label {
+    width: 50%;
+  }
+  .RadioGender label:first-child {
+    margin-right: 0;
+  }
+}

@@ -1,0 +1,138 @@
+.Modal {
+  position: fixed;
+  height: 576px;
+  left: 16px;
+  right: 19px;
+  padding: 16px 0 12px 0;
+  top: 50%;
+  transform: translateY(-50%);
+
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  cursor: default;
+
+  background-color: #fff;
+  border-radius: 4px;
+  box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.23);
+  z-index: 20;
+}
+
+.Overlay {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.4);
+  cursor: pointer;
+  z-index: 10;
+}
+
+.Modal, .Overlay {
+  opacity: 0;
+  animation: show 500ms linear 1;
+  animation-fill-mode: forwards;
+}
+
+.CloseAnim {
+  opacity: 1;
+  animation: close 500ms linear 1;
+  animation-fill-mode: forwards;
+}
+
+.Submitted {
+  height: 204px;
+  top: 240px;
+  transform: none;
+  padding: 32px 0 16px 0;
+  text-align: center;
+}
+
+.ModalTitle {
+  padding: 0 16px;
+  margin-bottom: 32px;
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.Submitted .ModalTitle {
+  margin-bottom: 8px;
+}
+
+.ModalExit {
+  position: absolute;
+  width: 56px;
+  height: 56px;
+  top: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.ModalText {
+  height: 100%;
+  margin-left: 16px;
+  padding-right: 20px;
+  margin-bottom: 24px;
+
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 38px;
+  letter-spacing: 0em;
+
+  overflow-y: auto;
+}
+
+.ModalText div {
+  margin: 0;
+  font-weight: 700;
+}
+
+.ModalButton {
+  position: relative;
+  width: 100%;
+  bottom: 0;
+  padding-left: 16px;
+  padding-right: 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background-color: #fff;
+}
+
+@keyframes show {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes close {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@media(min-width: 700px) {
+  .Modal {
+    max-width: 758px;
+    height: 800px;
+    left: 50%;
+    transform: translate3D(-50%, -50%, 0);
+  }
+  .Submitted {
+    max-width: 547px;
+    height: 244px;
+    top: 327px;
+  }
+}

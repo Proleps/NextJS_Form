@@ -1,0 +1,24 @@
+.PersonalInfo {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.Title {
+  margin-bottom: 24px;
+  display: flex;
+  left: 8px;
+}
+
+@media (min-width: 700px) {
+  .PersonalInfo div {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    align-items: flex-end;
+  }
+  .PersonalInfo div label {
+    margin-right: 80px;
+    margin-bottom: 48px;
+  }
+}

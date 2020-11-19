@@ -1,0 +1,38 @@
+.Button {
+  width: 100%;
+  max-width: 360px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background: #1890FF;
+  box-sizing: border-box;
+  border: none;
+  border-radius: 2px;
+  outline: none;
+
+  color: #FFFFFF;
+  font-family: "SF Pro Display Regular";
+  text-align: center;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 24px;
+
+  cursor: pointer;
+}
+
+.Button:hover {
+  background: #40A9FF;
+}
+
+.Button:active {
+  background: #096DD9;
+}
+
+.Disabled {
+  background: #E8E8E8;
+  color: #BCBCBC;
+  border: 1px solid #D9D9D9;
+}

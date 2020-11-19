@@ -1,0 +1,44 @@
+.App {
+  position: relative;
+  display: flex;
+  padding: 62px 16px 48px 16px;
+  justify-content: center;
+}
+
+.Form {
+  max-width: 928px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.Form h1 {
+  margin: 0 0 40px 0;
+  color: #262626;
+  font-size: 40px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 38px;
+  letter-spacing: 0em;
+  text-align: left;
+}
+
+.Form h2 {
+  margin: 0 0 24px 0;
+  font-family: "SF Pro Display Regular";
+  color: #262626;
+  font-size: 22px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 38px;
+  letter-spacing: 0em;
+  text-align: left;
+}
+
+@media (min-width: 690px) {
+  .App {
+    padding-top: 120px;
+    min-height: 100vh;
+  }
+}

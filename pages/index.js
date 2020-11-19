@@ -1,65 +1,250 @@
 import Head from 'next/head'
-import styles from '../styles/Home.module.css'
+import { useMemo, useState } from 'react'
+import { Button } from '../components/UI/Button/Button'
+import { FileInput } from '../components/FileInput/FileInput'
+import { Input } from '../components/UI/Input/Input'
+import { Modal } from '../components/Modal/Modal'
+import { Privacy } from '../components/Privacy/Privacy'
+import { Radio } from '../components/UI/Radio/Radio'
+import classes from '../styles/Form.module.css'
+import { PersonalInfo } from '../components/PersonalInfo/PersonalInfo'
 
-export default function Home() {
+const initialState = {
+  firstName: {
+    type: "text",
+    required: true,
+    placeholder: "Имя",
+    label: "Имя *",
+    message: "В имени могут быть только буквы",
+    value: "",
+    valid: false
+  },
+  lastName: {
+    type: "text",
+    required: true,
+    placeholder: "Фамилия",
+    label: "Фамилия *",
+    message: "В Фамилии могут быть только буквы",
+    value: "",
+    valid: false
+  },
+  email: {
+    type: "email",
+    required: true,
+    placeholder: "Электронная почта",
+    label: "Электронная почта *",
+    message: "Пожалуйста укажите электронную почту",
+    value: "",
+    valid: false
+  },
+  github: {
+    type: "url",
+    required: false,
+    placeholder: "Вставьте ссылку на Github",
+    label: "Вставьте ссылку на Github",
+    value: "",
+    valid: true
+  },
+  privacyInput: {
+    type: "checkbox",
+    required: true,
+    label: "* Я согласен с",
+    message: "В имени могут быть только буквы",
+    value: true,
+    valid: false
+  },
+  fileInput: {
+    type: "file",
+    required: false,
+    multiple: true,
+    message: "В имени могут быть только буквы",
+    value: "",
+    valid: true
+  },
+  radioInput: {
+    controls: ['genderMan', 'genderWoman'],
+    value: "",
+    valid: false,
+    required: true,
+    message: "укажите пол",
+    genderMan: {
+      type: "radio",
+      name: "gender",
+      message: "укажите пол",
+      value: "genderMan",
+      label: "Мужской",
+      valid: false
+    },
+    genderWoman: {
+      type: "radio",
+      name: "gender",
+      message: "укажите пол",
+      value: "genderWoman",
+      label: "Женский",
+      valid: false
+    }
+  }
+}
+
+let currentState = JSON.parse(JSON.stringify(initialState))
+
+function renderInputs(state, submitted, flag, valid, onChange) {
+  const acc = []
+  Object.keys(state).map( (item, i) => 
+    acc.push(
+      <Input
+        key={i-Math.random()}
+        state={state[item]}
+        flag={flag}
+        item={item}
+        valid={valid}
+        submitted={submitted}
+        onChange={onChange}
+      />
+    )
+  )
+  return acc
+}
+
+function renderRadio(state, submitted, onChange) {
+  const acc = []
+  
+  state.controls.map((item, i) => 
+    acc.push(
+      <Input
+        key={i+state.value}
+        state={state[item]}
+        item={[item]}
+        valid={state.valid}
+        checked={state.value}
+        submitted={submitted}
+        onChange={onChange}
+      />
+    )
+  )
+  return acc
+}
+
+export default function Form() {
+  const [formState, setFormState] = useState({submitted: false, valid: false, flag: false})
+
+  function isFormValid(click) {
+    let isValid = true
+    for (let i in currentState) {
+      isValid = isValid && currentState[i].valid
+    } 
+    if(isValid && !click) {
+      setFormState({...formState, submitted: false, valid: true})
+    } else {
+      setFormState({...formState, valid: false})
+    }
+    return isValid
+  }
+
+  function onInputChangeHandler({type, payload, valid}) {
+
+    currentState[type] = {...currentState[type], value: payload, valid: valid }
+    isFormValid()
+  }
+
+  function onRadioChangeHandler({payload, valid}) {
+
+    currentState.radioInput = {...currentState.radioInput, value: payload, valid: valid }
+    isFormValid()
+  }
+
+  function clickSubmitHandler() {
+    setFormState({...formState, submitted: true, valid: isFormValid(true), flag: true})
+  }
+
+  function closeModalHandler() {
+    currentState = JSON.parse(JSON.stringify(initialState))
+    setTimeout( () => setFormState({...formState, submitted: false, valid: false, flag: !formState.flag}, 500 ) )
+  }
+
+  const fileInput = useMemo( () => (
+    <FileInput
+      key={Math.random()}
+      state={currentState.fileInput}
+      item="fileInput"
+      onChange={onInputChangeHandler}
+      submit={formState.submitted}
+    />
+  ), [formState.flag] ) 
+
   return (
-    <div className={styles.container}>
+    <div className={classes.App}>
       <Head>
-        <title>Create Next App</title>
+        <title>Test | Form</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
+      <form className={ classes.Form } >
 
-        <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.js</code>
-        </p>
+          <h1>Анкета соискателя</h1>
 
-        <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
+          <PersonalInfo
+            state={{firstName: {...currentState.firstName}, lastName: {...currentState.lastName}, email: {...currentState.email}}}
+            renderChildren={renderInputs}
+            flag={formState.flag}
+            submit={formState.submitted}
+            valid={formState.valid}
+            onChange={onInputChangeHandler}
+            title="Личные данные"
+            fileInput={fileInput}
+          />
 
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
+          <Radio
+            state={currentState.radioInput}
+            renderChildren={renderRadio}
+            submit={formState.submitted}
+            flag={formState.flag}
+            onChange={onRadioChangeHandler}
+            title="Пол *"
+          />
 
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className={styles.card}
-          >
-            <h3>Examples &rarr;</h3>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
+          <h2>Github</h2>
+          <Input
+            key={Math.random()}
+            state={currentState.github}
+            onChange={onInputChangeHandler}
+            item="github"
+            submitted={formState.submitted}
+          />
+          
+          <Privacy
+            valid={currentState.privacyInput.valid} 
+            submitted={formState.submitted}
+            onChange={onInputChangeHandler}
+          > <Input
+              key={Math.random()}
+              state={currentState.privacyInput}
+              item="privacyInput"
+              submitted={formState.submitted && formState.valid}
+              onChange={onInputChangeHandler}
+            />
+          </Privacy>
 
-          <a
-            href="https://vercel.com/import?filter=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h3>Deploy &rarr;</h3>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
-        </div>
-      </main>
+          <Button
+            key={Math.random()}
+            value="Отправить"
+            submit={formState.submitted}
+            valid={formState.valid}
+            onClick={ clickSubmitHandler }
+          />
 
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel Logo" className={styles.logo} />
-        </a>
-      </footer>
+          {formState.submitted && formState.valid &&
+            <Modal
+              onCloseClick={ closeModalHandler }
+              title={`Спасибо ${currentState.firstName.value}!`}
+              text="Мы скоро свяжемся с вами"
+              buttonText="Понятно"
+              exit={false}
+              type="mini"
+            />
+          }
+
+      </form>
     </div>
   )
 }

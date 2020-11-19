@@ -1,0 +1,132 @@
+.Input {
+  margin-bottom: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  font-family: "SF Pro Display Regular";
+}
+
+.Input > div {
+  color:#262626;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 22px;
+  letter-spacing: 0em;
+  text-align: left;
+}
+
+.Input input {
+  height: 40px;
+  width: 343px;
+  margin-top: 2px;
+  padding: 8px 12px;
+
+  color: #595959;
+  border: 1px solid #D9D9D9;
+  box-sizing: border-box;
+  border-radius: 2px;
+  outline: none;
+  
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 24px;
+  letter-spacing: 0em;
+  text-align: left;
+  
+}
+
+.Input input:hover {
+  border: 1px solid #40A9FF;
+}
+
+.Input input:focus {
+  border: 1px solid #40A9FF;
+  box-shadow: 0px 0px 4px rgba(24, 144, 255, 0.5);
+}
+
+.Input input:disabled {
+  background: #F5F5F5;
+  border: 1px solid #D9D9D9;
+}
+
+.Input input::placeholder {
+  color: #BFBFBF;
+}
+
+.Input span {
+  margin-top: 2px;
+}
+
+.Radio {
+  height: 22px;
+  margin-bottom: 40px;
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: flex-end;
+  width: max-content;
+
+  color: #595959;
+  font-family: "SF Pro Display Regular";
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 22px;
+  letter-spacing: 0em;
+  text-align: left;
+
+  cursor: pointer;
+}
+
+.Radio span {
+  position: absolute;
+  height: 22px;
+  font-family: "SF Pro Display Regular";
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 22px;
+  letter-spacing: 0em;
+  text-align: left;
+  color: #F5222D;
+}
+
+.Radio input {
+  width: 16px;
+  height: 16px;
+  margin: auto 8px auto 0;
+
+  border: 1px solid #D9D9D9;
+  box-sizing: border-box;
+  border-radius: 2px;
+  cursor: pointer;
+}
+
+.InValid input {
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 24px;
+  letter-spacing: 0em;
+  text-align: left;
+  color: #F5222D;
+  border: 1px solid #F5222D;
+  box-sizing: border-box;
+  border-radius: 2px;
+}
+
+.InValid input:hover {
+  border: 1px solid #F5222D;
+}
+
+.InValid input:focus {
+  border: 1px solid #F5222D;
+  box-shadow: none;
+}
+
+@media (min-width: 700px) {
+  .Input input {
+    max-width: 256px;
+  }
+}
