@@ -24,7 +24,7 @@ export const FileInput = ({state, item, onChange, submitted}) => {
 
   function onCloseHandler(e) {
     e.preventDefault()
-    onChange({type: item, payload: "", valid: true})
+    onChange({type: "changeInput", item, payload: "", valid: true})
   }
 
   return (
