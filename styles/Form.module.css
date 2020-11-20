@@ -36,9 +36,31 @@
   text-align: left;
 }
 
-@media (min-width: 690px) {
+.PersonalInfo {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.Title {
+  margin-bottom: 24px;
+  display: flex;
+  left: 8px;
+}
+
+@media (min-width: 700px) {
   .App {
     padding-top: 120px;
     min-height: 100vh;
+  }
+  .PersonalInfo div {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    align-items: flex-start;
+  }
+  .PersonalInfo div label {
+    margin-right: 80px;
+    margin-bottom: 48px;
   }
 }

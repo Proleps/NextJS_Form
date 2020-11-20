@@ -5,20 +5,19 @@ import classes from './Privacy.module.css'
 
 
 export const Privacy = ({children, valid, submitted, onChange}) => {
-  const [flag, setFlag] = useState(false)
+  const [isModalClosed, setModalClosed] = useState(false)
   const cls = [classes.Privacy]
   submitted && !valid && cls.push(classes.NotValid)
-
+  
   function openModalHandler() {
-    setFlag(true)
+    setModalClosed(true)
   }
 
   function closeModalHandler(e, valid) {
-    console.log(e);
-    onChange({type: "privacyInput", payload: e.target.value, valid: valid})
-    setTimeout( () => setFlag(false), 500 )
+    onChange({type: "changeInput", item, payload: e.target.value, valid: valid})
+    setTimeout( () => setModalClosed(false), 500 )
   }
-  
+
   return (
     <>
       <div className={ cls.join(' ') } >
@@ -29,7 +28,7 @@ export const Privacy = ({children, valid, submitted, onChange}) => {
           >политикой конфиденциальности
         </span>
       </div>
-      {flag && (
+      {isModalClosed && (
         <Modal
           onCloseClick={ closeModalHandler }
           title="Политика конфиденциальности"

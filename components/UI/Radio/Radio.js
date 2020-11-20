@@ -1,17 +1,8 @@
-import { useState, useMemo } from 'react'
 import { ErrorCapture } from '../../ErrorCapture/ErrorCapture'
 import classes from './Radio.module.css'
 
-export const Radio = ({ state, renderChildren, submit, onChange, flag, title } ) => {
-  const [valid, setValid] = useState(state.valid)
+export const Radio = ({ state, submit, title, valid, children } ) => {
   
-  const children = useMemo( () => renderChildren(state, submit, onChangeHandler), [flag, submit] )
-
-  function onChangeHandler(news) {
-    state.required && setValid(true)
-    onChange({...news, type: 'radioInput'})
-  }
-
   return (
     <div className={ classes.Radio } >
       <h2 className={ classes.Title } >

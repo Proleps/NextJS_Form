@@ -1,41 +1,41 @@
-import {useState} from 'react'
 import { Input } from '../UI/Input/Input'
 import classes from './FileInput.module.css'
 
 
-export const FileInput = ({state, item, onChange, submit}) => {
+export const FileInput = ({state, item, onChange, submitted}) => {
 
-  const initialState = {
-    flag: !state.value,
-    fileName: state.value
-  }
-
-  const [file, setState] = useState(initialState)
   const cls = [classes.File]
+  !state.valid && cls.push(classes.NotValid)
+  !!state.value && cls.push(classes.Loaded)
 
-  function fileHandler(newState) {
-    onChange(newState)
-    !!newState.payload?setState({...file, flag: false, fileName: newState.payload}):setState({...file, flag: true, fileName: ""})
-    newState.valid && cls.splice(0, 1)
+  const loadedText = () => {
+    if (state.value.length > 1) {
+      return `Вы выбрали ${state.value.length} файла`
+    } else return state.value[0]?.name
   }
-  
-  !file.flag && !!file.value && cls.push(classes.NotValid)
-  !file.flag && cls.push(classes.Loaded)
 
-  function onClickHandler(e) {
+  function fileHandler(e) {
+    const someFiles = []
+    for(let i = 0; i < e.target.files.length; i++) {
+      someFiles.push(e.target.files.item(i))
+    }
+    onChange({type: "changeInput", item, payload: someFiles, valid: e.target.validity.valid})
+  }
+
+  function onCloseHandler(e) {
     e.preventDefault()
-    fileHandler({type: item, payload: "", valid: true})
+    onChange({type: item, payload: "", valid: true})
   }
 
   return (
     <Input
       state={state}
       item={item}
-      notValid={submit}
+      submitted={submitted}
       onChange={fileHandler}
       classFromFile={cls}
     > <>
-        {file.flag?(
+        {!state.value?(
           <>
             <svg viewBox="0 0 23 24" fill="none" xmlns="http://www.w3.org/2000/svg" >
               <path d="M10.8262 3.91406H12.1738C12.2936 3.91406 12.3535 3.97396 12.3535 4.09375V19.9062C12.3535 20.026 12.2936 20.0859 12.1738 20.0859H10.8262C10.7064 20.0859 10.6465 20.026 10.6465 19.9062V4.09375C10.6465 3.97396 10.7064 3.91406 10.8262 3.91406Z" fill="#8C8C8C"/>
@@ -47,8 +47,8 @@ export const FileInput = ({state, item, onChange, submit}) => {
             <svg width="12" height="14" viewBox="0 0 12 14" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M10.1766 2.07179C8.7047 0.599919 6.30783 0.599919 4.83751 2.07179L0.75939 6.14679C0.732827 6.17336 0.718764 6.20929 0.718764 6.24679C0.718764 6.28429 0.732827 6.32023 0.75939 6.34679L1.33595 6.92336C1.36231 6.9496 1.39798 6.96433 1.43517 6.96433C1.47236 6.96433 1.50804 6.9496 1.53439 6.92336L5.61251 2.84836C6.11876 2.34211 6.7922 2.06398 7.50783 2.06398C8.22345 2.06398 8.89689 2.34211 9.40158 2.84836C9.90783 3.35461 10.186 4.02804 10.186 4.74211C10.186 5.45773 9.90783 6.12961 9.40158 6.63586L5.24533 10.7905L4.57189 11.464C3.9422 12.0937 2.91876 12.0937 2.28908 11.464C1.98439 11.1593 1.8172 10.7546 1.8172 10.3234C1.8172 9.89211 1.98439 9.48742 2.28908 9.18273L6.41251 5.06086C6.5172 4.95773 6.6547 4.89992 6.80158 4.89992H6.80314C6.95001 4.89992 7.08595 4.95773 7.18908 5.06086C7.29376 5.16554 7.35001 5.30304 7.35001 5.44992C7.35001 5.59523 7.2922 5.73273 7.18908 5.83586L3.81876 9.20304C3.7922 9.22961 3.77814 9.26554 3.77814 9.30304C3.77814 9.34054 3.7922 9.37648 3.81876 9.40304L4.39533 9.97961C4.42168 10.0058 4.45736 10.0206 4.49455 10.0206C4.53173 10.0206 4.56741 10.0058 4.59376 9.97961L7.96251 6.61086C8.27345 6.29992 8.44376 5.88742 8.44376 5.44836C8.44376 5.00929 8.27189 4.59523 7.96251 4.28586C7.32033 3.64367 6.27658 3.64523 5.63439 4.28586L5.23439 4.68742L1.51251 8.40773C1.25991 8.65886 1.05967 8.95764 0.923413 9.28674C0.787158 9.61584 0.717597 9.96873 0.718764 10.3249C0.718764 11.0484 1.00158 11.728 1.51251 12.239C2.0422 12.7671 2.73595 13.0312 3.4297 13.0312C4.12345 13.0312 4.8172 12.7671 5.34533 12.239L10.1766 7.41086C10.8875 6.69836 11.2813 5.74992 11.2813 4.74211C11.2828 3.73273 10.8891 2.78429 10.1766 2.07179Z" fill="#8C8C8C"/>
             </svg>
-            {file.fileName}
-            <p onClick={onClickHandler} >
+            {loadedText()}
+            <p onClick={onCloseHandler} >
               <svg width="10" height="12" viewBox="0 0 10 12" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M5.80913 6L9.9107 1.11094C9.97945 1.02969 9.92163 0.90625 9.81538 0.90625H8.56851C8.49507 0.90625 8.42476 0.939062 8.37632 0.995312L4.99351 5.02813L1.6107 0.995312C1.56382 0.939062 1.49351 0.90625 1.41851 0.90625H0.171634C0.065384 0.90625 0.00757144 1.02969 0.0763214 1.11094L4.17788 6L0.0763214 10.8891C0.0609208 10.9072 0.0510407 10.9293 0.0478538 10.9529C0.0446669 10.9764 0.048307 11.0004 0.0583423 11.022C0.0683776 11.0435 0.0843867 11.0617 0.104468 11.0745C0.12455 11.0872 0.147861 11.0939 0.171634 11.0938H1.41851C1.49195 11.0938 1.56226 11.0609 1.6107 11.0047L4.99351 6.97188L8.37632 11.0047C8.4232 11.0609 8.49351 11.0938 8.56851 11.0938H9.81538C9.92163 11.0938 9.97945 10.9703 9.9107 10.8891L5.80913 6Z" fill="#8C8C8C"/>
               </svg>

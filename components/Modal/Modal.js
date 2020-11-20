@@ -16,7 +16,6 @@ export const Modal = ({title, buttonText, onCloseClick, exit, text, type }) => {
     !close && onCloseClick(e, false)
     setClose(true)
   }
-
   function onButtonCloseHandler(e) {
     !close && onCloseClick(e, true)
     setClose(true)
